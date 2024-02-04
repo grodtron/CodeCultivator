@@ -9,7 +9,7 @@ class PlatformAPIClient(ABC):
 class GitHubAPIClient(PlatformAPIClient):
     def __init__(self, api_key: str, config: Optional[Dict[str, Any]] = None):
         self.api_key = api_key
-        self.config: Dict[str, Any] =  = config or {}
+        self.config: Dict[str, Any] = config or {}
 
     def perform_action(self) -> None:
         # Implementation for GitHub API actions using self.api_key and self.config
