@@ -2,11 +2,11 @@ from cultivator.models.event import Event
 from cultivator.event_handlers import EventHandler, PushEventHandler, IssueEventHandler
 from cultivator.api_clients import GitHubAPIClient
 from cultivator.models.platform_enum import Platform
-from typing import Optional
+from typing import Optional, Dict, Any
 
 class EventHandlerFactory:
     @staticmethod
-    def get_handler(event: Event, api_key: str, config: Optional[dict] = None) -> EventHandler:
+    def get_handler(event: Event, api_key: str, config: Optional[Dict[str, Any]] = None) -> EventHandler:
         platform_client_mapping = {
             Platform.GITHUB: GitHubAPIClient
         }
