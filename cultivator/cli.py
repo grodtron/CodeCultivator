@@ -5,7 +5,7 @@ from cultivator.event_handler_factory import EventHandlerFactory
 from cultivator.load_event_data import load_event_data
 from typing import Optional
 
-def main():
+def main() -> None:
     parser = argparse.ArgumentParser(description="Process events.")
     parser.add_argument("--api-key", type=str, required=True, help="API key for the platform")
 
