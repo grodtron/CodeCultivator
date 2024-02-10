@@ -1,0 +1,25 @@
+name: Cultivate On New Issue
+
+on:
+  issues:
+    types: [opened]
+
+jobs:
+  cultivate-job:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.11' # Adjust the Python version as needed
+
+    - name: Install Dependencies
+      run: |
+        pip install . # This installs the current repository. Adjust if you have specific requirements or setup steps
+
+    - name: Run Cultivate Command
+      run: |
+        cultivate # Replace this with the actual command you want to run, including any necessary paths or environment variables
