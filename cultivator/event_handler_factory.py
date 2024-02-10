@@ -19,9 +19,9 @@ class EventHandlerFactory:
 
         if event.platform == Platform.GITHUB:
             event_type = event.data.get('event_type')
-            if event_type == 'push':
+            if 'pull_request' in event.data:
                 return PushEventHandler(client)
-            elif event_type == 'issue':
+            elif 'issue' in event.data:
                 return IssueEventHandler(client)
             else:
                 raise ValueError(f"Event type {event_type} is not supported.")
