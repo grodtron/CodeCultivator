@@ -12,6 +12,10 @@ def main() -> None:
     args = parser.parse_args()
 
     event = load_event_data()  # This would be replaced with the actual function to load event data
+
+    print(repr(event))
+    
+    
     handler = EventHandlerFactory.get_handler(event, args.api_key)
     handler.handle_event(event.data)
 
