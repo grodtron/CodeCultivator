@@ -22,4 +22,4 @@ jobs:
 
     - name: Run Cultivate Command
       run: |
-        cultivate # Replace this with the actual command you want to run, including any necessary paths or environment variables
+        cultivate --api-key FOOBAR# Replace this with the actual command you want to run, including any necessary paths or environment variables
