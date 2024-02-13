@@ -1,5 +1,5 @@
 from dataclasses import dataclass, field
-from typing import Optional, List, Dict
+from typing import Optional, List, Dict, Any
 from datetime import datetime
 import json
 
@@ -21,21 +21,22 @@ class Issue:
     assignees: List[User] = field(default_factory=list)
     labels: List[str] = field(default_factory=list)
 
-def parse_issue(data: Dict[str, any]) -> Issue:
-    user_data = data['issue']['user']
+def parse_issue(data: Dict[str, Any]) -> Issue:
+    issue_data = data['issue']
+    user_data = issue_data['user']
     user = User(id=user_data['id'], username=user_data['login'])
-    assignees = [User(id=assignee['id'], username=assignee['login']) for assignee in data['issue'].get('assignees', [])]
-    labels = [label for label in data['issue'].get('labels', [])]
+    assignees = [User(id=assignee['id'], username=assignee['login']) for assignee in issue_data.get('assignees', [])]
+    labels = [label['name'] for label in issue_data.get('labels', [])]
 
     issue = Issue(
-        id=data['issue']['id'],
-        title=data['issue']['title'],
-        state=data['issue']['state'],
-        created_at=datetime.fromisoformat(data['issue']['created_at'].rstrip('Z')),
-        updated_at=datetime.fromisoformat(data['issue']['updated_at'].rstrip('Z')),
+        id=issue_data['id'],
+        title=issue_data['title'],
+        state=issue_data['state'],
+        created_at=datetime.fromisoformat(issue_data['created_at'].rstrip('Z')),
+        updated_at=datetime.fromisoformat(issue_data['updated_at'].rstrip('Z')),
         user=user,
-        body=data['issue'].get('body'),
-        comments=data['issue']['comments'],
+        body=issue_data.get('body'),
+        comments=issue_data['comments'],
         assignees=assignees,
         labels=labels
     )
