@@ -9,6 +9,7 @@ class TestParseIssue(unittest.TestCase):
             "issue": {
                 "id": 1,
                 "title": "Test Issue",
+                "body": "This is a test issue",
                 "state": "open",
                 "created_at": "2024-02-10T21:23:24Z",
                 "updated_at": "2024-02-10T21:23:24Z",
