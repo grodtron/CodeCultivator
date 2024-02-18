@@ -1,5 +1,6 @@
 import unittest
 from datetime import datetime, timezone
+
 # Assuming the parse_issue function, Issue, and User classes are defined in issue.py
 from cultivator.models.issue import parse_issue, Issue, User
 
@@ -25,8 +26,12 @@ class TestParseIssue(unittest.TestCase):
 
     def test_basic_issue(self) -> None:
         issue = parse_issue(self.basic_issue_json)
-        expected_created_at = datetime.fromisoformat("2024-02-10T21:23:24").replace(tzinfo=timezone.utc)
-        expected_updated_at = datetime.fromisoformat("2024-02-10T21:23:24").replace(tzinfo=timezone.utc)
+        expected_created_at = datetime.fromisoformat("2024-02-10T21:23:24").replace(
+            tzinfo=timezone.utc
+        )
+        expected_updated_at = datetime.fromisoformat("2024-02-10T21:23:24").replace(
+            tzinfo=timezone.utc
+        )
         self.assertEqual(issue.id, 1)
         self.assertEqual(issue.title, "Test Issue")
         self.assertEqual(issue.state, "open")
@@ -57,7 +62,5 @@ class TestParseIssue(unittest.TestCase):
         self.assertIsNone(issue.body)
 
 
-
-
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()
