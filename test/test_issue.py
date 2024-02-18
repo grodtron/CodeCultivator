@@ -1,6 +1,5 @@
 import unittest
-from datetime import datetime
-
+from datetime import datetime, timezone
 # Assuming the parse_issue function, Issue, and User classes are defined in issue.py
 from cultivator.models.issue import parse_issue, Issue, User
 
@@ -11,7 +10,6 @@ class TestParseIssue(unittest.TestCase):
             "issue": {
                 "id": 1,
                 "title": "Test Issue",
-                "body": "This is a test issue",
                 "state": "open",
                 "created_at": "2024-02-10T21:23:24Z",
                 "updated_at": "2024-02-10T21:23:24Z",
@@ -27,15 +25,13 @@ class TestParseIssue(unittest.TestCase):
 
     def test_basic_issue(self) -> None:
         issue = parse_issue(self.basic_issue_json)
+        expected_created_at = datetime.fromisoformat("2024-02-10T21:23:24").replace(tzinfo=timezone.utc)
+        expected_updated_at = datetime.fromisoformat("2024-02-10T21:23:24").replace(tzinfo=timezone.utc)
         self.assertEqual(issue.id, 1)
         self.assertEqual(issue.title, "Test Issue")
         self.assertEqual(issue.state, "open")
-        self.assertEqual(
-            issue.created_at, datetime.fromisoformat("2024-02-10T21:23:24Z")
-        )
-        self.assertEqual(
-            issue.updated_at, datetime.fromisoformat("2024-02-10T21:23:24Z")
-        )
+        self.assertEqual(issue.created_at, expected_created_at)
+        self.assertEqual(issue.updated_at, expected_updated_at)
         self.assertEqual(issue.user.id, 100)
         self.assertEqual(issue.user.username, "user1")
         self.assertEqual(issue.comments, 0)
@@ -61,5 +57,7 @@ class TestParseIssue(unittest.TestCase):
         self.assertIsNone(issue.body)
 
 
-if __name__ == "__main__":
+
+
+if __name__ == '__main__':
     unittest.main()
