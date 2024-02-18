@@ -27,12 +27,8 @@ class TestParseIssue(unittest.TestCase):
 
     def test_basic_issue(self) -> None:
         issue = parse_issue(self.basic_issue_json)
-        expected_created_at = datetime.fromisoformat("2024-02-10T21:23:24").replace(
-            tzinfo=timezone.utc
-        )
-        expected_updated_at = datetime.fromisoformat("2024-02-10T21:23:24").replace(
-            tzinfo=timezone.utc
-        )
+        expected_created_at = datetime.fromisoformat("2024-02-10T21:23:24")
+        expected_updated_at = datetime.fromisoformat("2024-02-10T21:23:24")
         self.assertEqual(issue.id, 1)
         self.assertEqual(issue.title, "Test Issue")
         self.assertEqual(issue.state, "open")
