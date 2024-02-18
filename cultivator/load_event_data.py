@@ -9,7 +9,7 @@ def load_event_data() -> Event:
         if "GITHUB_EVENT_PATH" in os.environ:
             platform = Platform.GITHUB
             event_path = os.environ["GITHUB_EVENT_PATH"]
-            with open(event_path, 'r') as event_file:
+            with open(event_path, "r") as event_file:
                 data = json.load(event_file)
             return Event(platform, data)
         else:
