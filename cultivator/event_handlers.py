@@ -25,13 +25,14 @@ class PushEventHandler(EventHandler):
 class IssueEventHandler(EventHandler):
     def __init__(self, client: PlatformAPIClient, openaiClient: OpenAI):
         self.client = client
+        self.openai = openaiClient
 
     def handle_event(self, event_data: Any) -> None:
         # Implementation for handling issue events
 
         issue = parse_issue(event_data)
 
-        chat_completion = openaiClient.chat.completions.create(
+        chat_completion = self.openai.chat.completions.create(
             messages=[
                 {
                     "role": "system",
