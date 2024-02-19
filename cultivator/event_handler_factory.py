@@ -9,7 +9,10 @@ from openai import OpenAI
 class EventHandlerFactory:
     @staticmethod
     def get_handler(
-        event: Event, api_key: str, open_ai_api_key: str, config: Optional[Dict[str, Any]] = None
+        event: Event,
+        api_key: str,
+        open_ai_api_key: str,
+        config: Optional[Dict[str, Any]] = None,
     ) -> EventHandler:
         platform_client_mapping = {Platform.GITHUB: GitHubAPIClient}
 
@@ -22,7 +25,7 @@ class EventHandlerFactory:
         client = client_class(api_key, config)
 
         openai = OpenAI(api_key=open_ai_api_key)
-        
+
         if event.platform == Platform.GITHUB:
             event_type = event.data.get("event_type")
             if "pull_request" in event.data:
