@@ -12,6 +12,10 @@ def main() -> None:
         "--api-key", type=str, required=True, help="API key for the platform"
     )
 
+    parser.add_argument(
+        "--open-ai-api-key", type=str, required=True, help="API key for OpenAI"
+    )
+
     args = parser.parse_args()
 
     event = (
@@ -20,7 +24,7 @@ def main() -> None:
 
     print(repr(event))
 
-    handler = EventHandlerFactory.get_handler(event, args.api_key)
+    handler = EventHandlerFactory.get_handler(event, args.api_key, args.open_ai_api_key)
     handler.handle_event(event.data)
 
 
