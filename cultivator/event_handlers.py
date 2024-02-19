@@ -2,6 +2,8 @@ from abc import ABC, abstractmethod
 from cultivator.api_clients import PlatformAPIClient
 from typing import Any
 
+from cultivator.models.issue import Issue, parse_issue
+
 
 class EventHandler(ABC):
     @abstractmethod
@@ -24,4 +26,7 @@ class IssueEventHandler(EventHandler):
 
     def handle_event(self, event_data: Any) -> None:
         # Implementation for handling issue events
-        pass
+
+        issue = parse_issue(event_data)
+
+        print(issue.body)
