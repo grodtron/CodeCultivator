@@ -2,6 +2,8 @@ from abc import ABC, abstractmethod
 from cultivator.api_clients import PlatformAPIClient
 from typing import Any
 
+from openai import OpenAI
+
 from cultivator.models.issue import Issue, parse_issue
 
 
@@ -21,7 +23,7 @@ class PushEventHandler(EventHandler):
 
 
 class IssueEventHandler(EventHandler):
-    def __init__(self, client: PlatformAPIClient):
+    def __init__(self, client: PlatformAPIClient, openaiClient: OpenAI):
         self.client = client
 
     def handle_event(self, event_data: Any) -> None:
@@ -29,4 +31,15 @@ class IssueEventHandler(EventHandler):
 
         issue = parse_issue(event_data)
 
-        print(issue.body)
+        chat_completion = client.chat.completions.create(
+            messages=[
+                {'role':'system', 'content':'You are an experienced Python programmer helping a respected colleague.'}
+                {
+                    "role": "user",
+                    "content": f"How would you approach solving the following issue?\n\n{issue.title}\n{'=' * len(issue.title)}\n{issue.body}",
+                }
+            ],
+            model="gpt-3.5-turbo",
+        )
+        
+        print(chat_completion)
