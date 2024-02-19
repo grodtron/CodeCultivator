@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 from cultivator.api_clients import PlatformAPIClient
 from typing import Any
-
+from enum import Enum, auto
 from openai import OpenAI
 
 from cultivator.models.issue import Issue, parse_issue
@@ -22,6 +22,12 @@ class PushEventHandler(EventHandler):
         pass
 
 
+class CodeEditType(Enum):
+    ADDING_TESTS = auto()
+    WRITING_NEW_CODE = auto()
+    EDITING_EXISTING_CODE = auto()
+
+
 class IssueEventHandler(EventHandler):
     def __init__(self, client: PlatformAPIClient, openaiClient: OpenAI):
         self.client = client
@@ -36,11 +42,11 @@ class IssueEventHandler(EventHandler):
             messages=[
                 {
                     "role": "system",
-                    "content": "You are an experienced Python programmer helping a respected colleague.",
+                    "content": f"Please answer with a single word, one of the following: [{', '.join([member.name for member in CodeEditType])}] ",
                 },
                 {
                     "role": "user",
-                    "content": f"How would you approach solving the following issue?\n\n{issue.title}\n{'=' * len(issue.title)}\n{issue.body}",
+                    "content": f"How would you classify solving the following issue?\n\n{issue.title}\n{'=' * len(issue.title)}\n{issue.body}",
                 },
             ],
             model="gpt-3.5-turbo",
