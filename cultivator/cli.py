@@ -16,7 +16,6 @@ def main() -> None:
         "--open-ai-api-key", type=str, required=True, help="API key for OpenAI"
     )
 
-    
     args = parser.parse_args()
 
     event = (
