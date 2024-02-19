@@ -24,7 +24,7 @@ class EventHandlerFactory:
         client_class = platform_client_mapping[event.platform]
         client = client_class(api_key, config)
 
-        openai = OpenAI(api_key=open_ai_api_key)
+        openai = OpenAI(api_key=open_ai_api_key, max_retries=0)
 
         if event.platform == Platform.GITHUB:
             event_type = event.data.get("event_type")
