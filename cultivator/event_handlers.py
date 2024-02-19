@@ -42,11 +42,11 @@ class IssueEventHandler(EventHandler):
             messages=[
                 {
                     "role": "system",
-                    "content": f"Please answer with a single word, one of the following: [{', '.join([member.name for member in CodeEditType])}] ",
+                    "content": f"Your task is to triage incoming change requests into distinct categories. Please always answer one of the following options: [{', '.join([member.name for member in CodeEditType])}] ",
                 },
                 {
                     "role": "user",
-                    "content": f"How would you classify solving the following issue?\n\n{issue.title}\n{'=' * len(issue.title)}\n{issue.body}",
+                    "content": f"What category does this request best match?\n\n{issue.title}\n{'=' * len(issue.title)}\n{issue.body}",
                 },
             ],
             model="gpt-3.5-turbo",
