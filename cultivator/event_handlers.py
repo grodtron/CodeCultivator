@@ -31,7 +31,7 @@ class IssueEventHandler(EventHandler):
 
         issue = parse_issue(event_data)
 
-        chat_completion = client.chat.completions.create(
+        chat_completion = openaiClient.chat.completions.create(
             messages=[
                 {
                     "role": "system",
